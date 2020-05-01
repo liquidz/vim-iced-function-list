@@ -23,13 +23,13 @@ function! s:open(mode, resp) abort
   normal! zz
 endfunction
 
-function! s:resolve(mode, func_name) abort
-  call iced#nrepl#op#cider#info(a:func_name, {resp -> s:open(a:mode, resp)})
+function! s:resolve(ns_name, mode, func_name) abort
+  call iced#nrepl#op#cider#info(a:ns_name, a:func_name, {resp -> s:open(a:mode, resp)})
 endfunction
 
-function! s:select(resp) abort
+function! s:select(ns_name, resp) abort
   if !has_key(a:resp, 'value') | return iced#message#error('not_found') | endif
-  call iced#selector({'candidates': a:resp['value'], 'accept': funcref('s:resolve')})
+  call iced#selector({'candidates': a:resp['value'], 'accept': funcref('s:resolve', [a:ns_name])})
 endfunction
 
 function! iced#functions#list() abort
@@ -37,7 +37,7 @@ function! iced#functions#list() abort
 
   let ns = iced#nrepl#ns#name()
   let code = printf('(map (comp #(subs %% 2) str second) (ns-publics ''%s))', ns)
-  call iced#eval_and_read(code, funcref('s:select'))
+  call iced#eval_and_read(code, funcref('s:select', [ns]))
 endfunction
 
 let &cpo = s:save_cpo
