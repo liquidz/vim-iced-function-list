@@ -8,6 +8,11 @@ set cpo&vim
 
 command! IcedBrowseFunction call iced#functions#list()
 
+if !exists('g:iced#palette')
+  let g:iced#palette = {}
+endif
+call extend(g:iced#palette, {'BrowseFunction': ':IcedBrowseFunction'})
+
 let &cpo = s:save_cpo
 unlet s:save_cpo
 
