@@ -22,6 +22,6 @@ Plug 'liquidz/vim-iced-function-list', {'for': 'clojure', 'on': 'IcedBrowseFunct
 
 ## License
 
-Copyright (c) 2018 [Masashi Iizuka](http://twitter.com/uochan)
+Copyright (c) 2018-2020 [Masashi Iizuka](http://twitter.com/uochan)
 
 Distributed under the MIT License.
